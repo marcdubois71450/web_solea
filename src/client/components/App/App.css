@@ -1,0 +1,18 @@
+@import '../../../../node_modules/npm-font-open-sans/open-sans.css';
+@FontPathOpenSans: "../fonts/open-sans";
+
+
+
+h1 {
+  color: green;
+  font-family: 'Open Sans';
+  font-weight: 300;
+  font-style: normal;
+  font-size: 50px;
+  margin: 250px;
+}
+
+body {
+  text-align: center;
+  margin: auto;
+}
