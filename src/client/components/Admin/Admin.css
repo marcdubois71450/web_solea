@@ -1,0 +1,101 @@
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 36px;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #373a47;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 35px;
+  transition: 0.30s;
+
+}
+.bm-cross-button:hover {
+  transform: rotate(90deg);
+  transition: 0.30s;
+}
+
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #bdc3c7;
+
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #373a47;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+  padding-top: 0.8em;
+}
+
+/* Individual item */
+.bm-item {
+  display: inline-block;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+.page-wrap{
+  background-color: red;
+  height: 100%;
+  width: 100%;
+}
+.menu-item {
+  color: #808080;
+  font-size: 35px;
+  text-decoration:none;
+  margin-top: 20px;
+  transition: 0.30s;
+
+}
+.bm-menu-wrap{
+  position: absolute;
+}
+
+
+.menu-item:after {
+	content: '';
+  position: absolute;
+  left: 40px;
+  display: inline-block;
+  width: 30%;
+  border-bottom: 1px solid;
+  margin-top: 45px;
+  opacity: 0;
+	transition: opacity 0.35s, transform 0.35s;
+	transform: scale(0,2);
+}
+
+.menu-item:hover:after {
+  opacity: 1;
+	transform: scale(1);
+}
+
+.menu-item:hover {
+  	transition: 0.30s;
+    color: white;
+
+
+}
