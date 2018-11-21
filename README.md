@@ -24,7 +24,7 @@ Start the project locally
 ```
 npm run dev
 ```
-The developement server is ready in port 3000
+The developement server is ready on port 3000
 
 
 ### Production
@@ -32,4 +32,4 @@ Start the project in production mode
 ```
 npm start
 ```
-The server is ready in port 8080
+The server is ready on port 8080
