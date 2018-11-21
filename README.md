@@ -1,4 +1,4 @@
-# Superviseur
+# Web_Solea
 
 The project Web_Solea, is a project of License 3 TRI (Bourget-Du-Lac). Web Server allows you to administer all network devices (router, switch, server, etc.). Many features are available or will be, such as configuration backup.
 
