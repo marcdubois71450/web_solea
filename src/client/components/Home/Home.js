@@ -12,7 +12,6 @@ export default class Home extends Component {
 
 
       <div className="Home">
-      <h1 className="WebsiteName">WebSoléa</h1>
       </div>
 
       <ServerInfo />

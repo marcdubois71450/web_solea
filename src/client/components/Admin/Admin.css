@@ -45,7 +45,6 @@
 /* Wrapper for item list */
 .bm-item-list {
   color: #b8b7ad;
-  padding-top: 0.8em;
 }
 
 /* Individual item */
@@ -58,16 +57,18 @@
   background: rgba(0, 0, 0, 0.3);
 }
 .page-wrap{
-  background-color: red;
+  background-color: #F7F7F7;
   height: 100%;
   width: 100%;
 }
 .menu-item {
   color: #808080;
-  font-size: 35px;
+  font-size: 20px;
   text-decoration:none;
-  margin-top: 20px;
+  padding-top: 17px;
   transition: 0.30s;
+  cursor: pointer;
+  padding-left: 10px;
 
 }
 .bm-menu-wrap{
@@ -78,11 +79,11 @@
 .menu-item:after {
 	content: '';
   position: absolute;
-  left: 40px;
+  left: 38px;
   display: inline-block;
-  width: 30%;
+  width: 20%;
   border-bottom: 1px solid;
-  margin-top: 45px;
+  margin-top: 25px;
   opacity: 0;
 	transition: opacity 0.35s, transform 0.35s;
 	transform: scale(0,2);
@@ -96,6 +97,15 @@
 .menu-item:hover {
   	transition: 0.30s;
     color: white;
+}
 
+.menu-title {
+  margin:0;
+  font-size: 40px;
+}
 
+.menu-small-title {
+  margin:0;
+  font-size: 25px;
+  padding-top: 10px;
 }
