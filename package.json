@@ -16,6 +16,7 @@
     "express": "^4.16.3",
     "ip": "^1.1.5",
     "js-md5": "^0.7.3",
+    "md5": "^2.2.1",
     "npm-font-open-sans": "^1.1.0",
     "ra-data-simple-rest": "^2.4.2",
     "react": "^16.5.2",
