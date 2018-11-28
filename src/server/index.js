@@ -3,7 +3,7 @@ const os = require('os');
 
 const app = express();
 
-const port = "8080";
+const port = "80";
 
 app.use(express.static('dist'));
 app.get('/api/serverinfo', (req, res) => res.send({ OsType: os.type() }));

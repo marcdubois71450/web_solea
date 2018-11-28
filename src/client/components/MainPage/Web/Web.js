@@ -7,7 +7,7 @@ export default class Web extends Component {
 open_popup()
  {
         const  width = 800;
-         const height = 623;
+         const height = 620;
          if(window.innerWidth)
          {
                  var left = (window.innerWidth-width)/2;
