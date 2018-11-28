@@ -6,17 +6,16 @@
 }
 
 .TitleLogin{
-  position: absolute;
-  top: 50px;
-  left: 450px;
+  text-align: center;
   font-size: 65px;
   font-weight: normal;
   color: #191919;
+  margin-top: 20px;
 }
 .Form{
   position: absolute;
   margin: auto;
-  top: 0;
+  top: 75;
   right: 0;
   bottom: 0;
   left: 0;
@@ -66,4 +65,16 @@
 .FormSubmit:focus {
   outline-style: none;
   box-shadow: 0 0 3pt 2pt #191919;
+}
+
+.Formulaire{
+  position:absolute;
+    left: 50%;
+    top: 50%;
+    width: 400px;
+    height: 220px;
+    margin-left: -200px;
+    margin-top: -110px;
+    background-color: rgba(200, 200, 200, 0.7);
+    border-radius: 15px;
 }

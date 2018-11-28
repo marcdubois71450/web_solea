@@ -31,11 +31,9 @@ onChangePassword (event) {
       </div>
       :
       <div className="LoginPage">
-        <div>
-          <form>
+        <div className="Formulaire">
             <p className="TitleLogin">WebSoléa</p>
-            <input value={this.state.HashPassword} onChange={this.onChangePassword} className="Form" placeholder="Mot de passe" type="password" name="password" /><br />
-          </form>
+            <input value={this.state.HashPassword} onChange={this.onChangePassword} className="Form" placeholder="Mot de passe" type="password" name="password" />
         </div>
       </div>
 
