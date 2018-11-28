@@ -6,7 +6,7 @@ export default class File extends Component {
   render() {
     return (
       <div>
-        <h1>File</h1>
+        <h1 className="MainPageTitle">Serveur de fichier</h1>
       </div>
     );
   }

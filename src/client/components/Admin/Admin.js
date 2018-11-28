@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Admin.css';
 import { render } from 'react-dom';
 import ServerInfo from './../ServerInfo';
-import Home from './../Home';
+import Home from './../MainPage/Home';
 import Cisco from './../MainPage/Cisco';
 import Vmware from './../MainPage/Vmware';
 import Dhcp from './../MainPage/Dhcp';
@@ -12,7 +12,6 @@ import Asterisk from './../MainPage/Asterisk';
 import Ldap from './../MainPage/Ldap';
 import File from './../MainPage/File';
 import Fortigate from './../MainPage/Fortigate';
-
 import { scaleRotate as Menu } from 'react-burger-menu'
 
 export default class Admin extends Component {
@@ -29,7 +28,6 @@ onSelection(event) {
   this.setState({ selected: event });
   this.setState({ OpenMenu: false });
 }
-
 
   render() {
     let MainPage;
@@ -57,11 +55,10 @@ onSelection(event) {
       MainPage = <Home />;
     }
 
-
     return (
       <div>
           <Menu pageWrapId={"page-wrap"} outerContainerId={"outer-container"} isOpen={this.state.OpenMenu}>
-            <h1 className="menu-title">WebSolea</h1>
+            <p className="menu-title">WebSolea</p>
             <a onClick={() => this.onSelection("home")} className="menu-item" >Accueil</a>
             <h2 className="menu-small-title">Aix-Les-Bains</h2>
             <a onClick={() => this.onSelection("cisco")} className="menu-item">Routeur/Switch Cisco</a>
@@ -71,12 +68,11 @@ onSelection(event) {
             <a onClick={() => this.onSelection("web")} className="menu-item">Serveur WEB</a>
             <a onClick={() => this.onSelection("asterisk")} className="menu-item">Serveur Asterisk</a>
             <a onClick={() => this.onSelection("ldap")} className="menu-item">Serveur LDAP</a>
-            <a onClick={() => this.onSelection("file")} className="menu-item">Serveur Fichier</a>
+            <a onClick={() => this.onSelection("file")} className="menu-item">Serveur de fichier</a>
             <h2 className="menu-small-title">Valence</h2>
             <a onClick={() => this.onSelection("fortigate")} className="menu-item">Routeur Fortigate</a>
           </Menu>
           <div id="outer-container">
-
             <main className="page-wrap" id="page-wrap">
             {MainPage}
             </main>

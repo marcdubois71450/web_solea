@@ -6,7 +6,7 @@ export default class Vmware extends Component {
   render() {
     return (
       <div>
-        <h1>Vmware</h1>
+        <h1 className="MainPageTitle">Serveur HP VMware</h1>
       </div>
     );
   }

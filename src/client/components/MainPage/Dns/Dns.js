@@ -6,7 +6,7 @@ export default class Dns extends Component {
   render() {
     return (
       <div>
-        <h1>Dns</h1>
+        <h1 className="MainPageTitle">Serveur DNS</h1>
       </div>
     );
   }

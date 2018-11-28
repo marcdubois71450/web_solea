@@ -6,7 +6,7 @@ export default class Ldap extends Component {
   render() {
     return (
       <div>
-        <h1>Ldap</h1>
+        <h1 className="MainPageTitle">Serveur LDAP</h1>
       </div>
     );
   }

@@ -6,7 +6,7 @@ export default class Dhcp extends Component {
   render() {
     return (
       <div>
-        <h1>Asterisk</h1>
+        <h1 className="MainPageTitle">Serveur DHCP</h1>
       </div>
     );
   }

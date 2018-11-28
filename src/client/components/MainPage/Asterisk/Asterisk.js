@@ -6,7 +6,7 @@ export default class Asterisk extends Component {
   render() {
     return (
       <div>
-        <h1>Asterisk</h1>
+        <h1 className="MainPageTitle">Serveur Asterisk</h1>
       </div>
     );
   }

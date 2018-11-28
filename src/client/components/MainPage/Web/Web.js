@@ -6,7 +6,7 @@ export default class Web extends Component {
   render() {
     return (
       <div>
-        <h1>Web</h1>
+        <h1 className="MainPageTitle">Serveur Web</h1>
       </div>
     );
   }
