@@ -32,4 +32,4 @@ Start the project in production mode
 ```
 npm start
 ```
-The server is ready on port 8080
+The server is ready on port 80

@@ -4,7 +4,9 @@ import './ServerInfo.css';
 export default class ServerInfo extends Component {
 
 
-    state = { OsType: null };
+    state = { OsType: null,
+              port: null
+            };
 
      componentDidMount() {
        fetch('/api/serverinfo')
