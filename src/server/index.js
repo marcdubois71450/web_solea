@@ -17,13 +17,11 @@ app.disable('x-powered-by');
 
 app.get('/api/serverinfo', (req, res) => res.send({ OsType: os.type() }));
 app.get('/api/serverport', (req, res) => res.send({ Port: port }));
-app.get('/api/c3284d0f94606de1fd2af172aba15bf3', (req, res) => res.send({ password: true }));
+app.get('/api/21232f297a57a5a743894a0e4a801fc3', (req, res) => res.send({ password: true }));
 
 
 
 app.listen(port, () => console.log('Le serveur est prêt sur le port '+port+' !'));
-
-
 
 
 app.route('/api/ping').get(function(req, res, next) {
@@ -64,6 +62,4 @@ setInterval(function(){
      CheckPingVwmare();
      CheckPingDns();
      CheckDns();
-
-
 },1000);
