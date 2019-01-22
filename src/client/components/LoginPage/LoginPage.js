@@ -16,7 +16,7 @@ export default class LoginPage extends Component {
     }
 
 onChangePassword (event) {
-  fetch('/api/'+md5(event.target.value))
+  fetch('/api/' + md5(event.target.value))
     .then(res => res.json())
     .then(pass => this.setState({ Password: pass.password }));
    ;

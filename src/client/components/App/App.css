@@ -5,5 +5,9 @@ body {
   font-family: 'Open Sans';
   font-weight: 300;
   font-style: normal;
-   user-select: none; 
+   user-select: none;
+   outline: none;
+}
+*:focus {
+    outline: 0;
 }
