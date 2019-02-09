@@ -11,3 +11,86 @@ body {
 *:focus {
     outline: 0;
 }
+
+
+
+
+table
+{
+	width: 750px;
+	margin:50px auto;
+}
+
+tr:nth-of-type(odd)
+{
+	background: #eee;
+}
+
+th
+{
+	background: #373a47;
+	color: white;
+	font-weight: bold;
+}
+
+td, th
+{
+	padding: 10px;
+	text-align: left;
+	font-size: 18px;
+}
+
+.device
+{
+	text-align: center;
+}
+
+.bouton
+{
+	background: #373a47;
+	color: white;
+	padding: 10px;
+	text-decoration: none;
+	margin: 20px;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.bouton:hover
+{
+	background: white;
+	color: black;
+}
+
+.ip
+{
+	font-size: 25px;
+	margin: 20px;
+	margin-top: 30px;
+}
+.domaine{
+  font-size: 25px;
+  margin: 20px;
+
+}
+.mac
+{
+	font-size: 25px;
+	margin: 20px;
+	margin-bottom: 35px;
+}
+
+.restaurer
+{
+	cursor: pointer;
+	background: #373a47;
+	color: white;
+	width: 100px;
+	text-align: center;
+}
+
+.restaurer:hover
+{
+	background: white;
+	color: black;
+}

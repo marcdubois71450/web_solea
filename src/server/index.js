@@ -6,6 +6,7 @@ var nslookup = require('nslookup');
 
 
 
+
 var obj = {vmware: false, dns: false, dhcp: false, nas: false, asterisk: false};
 
 const app = express();
@@ -18,8 +19,6 @@ app.disable('x-powered-by');
 app.get('/api/serverinfo', (req, res) => res.send({ OsType: os.type() }));
 app.get('/api/serverport', (req, res) => res.send({ Port: port }));
 app.get('/api/21232f297a57a5a743894a0e4a801fc3', (req, res) => res.send({ password: true }));
-
-
 
 app.listen(port, () => console.log('Le serveur est prêt sur le port '+port+' !'));
 
