@@ -5,9 +5,8 @@ var ping = require('ping');
 var nslookup = require('nslookup');
 
 
-
-
-var obj = {vmware: false, dns: false, dhcp: false, nas: false, asterisk: false};
+//var obj = {vmware: false, dns: false, dhcp: false, nas: false, asterisk: false, };
+var obj = {google: false};
 
 const app = express();
 
@@ -29,30 +28,31 @@ app.route('/api/ping').get(function(req, res, next) {
 
 
 function CheckPingVwmare(){
-  var hosts = ['192.168.141.3'];
-  hosts.forEach(function(host){
-      ping.sys.probe(host, function(isAlive){
-        obj.vmware = isAlive;
-      });
-  });
-}
-function CheckPingDns(){
-  var hosts = ['192.168.141.3'];
-  hosts.forEach(function(host){
-      ping.sys.probe(host, function(isAlive){
-        obj.dns = isAlive;
-      });
-  });
-}
-
-
-function CheckDns(){
   nslookup('google.fr')
     .server('8.8.8.8') // default is 8.8.8.8
     .timeout(10 * 1000) // default is 3 * 1000 ms
     .end(function (err, addrs) {
-      console.log(addrs); // => ['66.6.44.4']
+      var hosts = [addrs];
+      hosts.forEach(function(host){
+          ping.sys.probe(host, function(isAlive){
+            obj.google = isAlive;
+          });
+      });
     });
+}
+function CheckPingDns(){
+  var hosts = ['1.1.1.1'];
+  hosts.forEach(function(host){
+      ping.sys.probe(host, function(isAlive){
+        obj.google2 = isAlive;
+      });
+  });
+}
+
+
+
+function CheckDns(){
+
 
 }
 

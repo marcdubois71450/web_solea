@@ -22,7 +22,7 @@ export default class ServerInfo extends Component {
     return (
       <div className="serverinfo">
       {OsType ? <p>{`OS Serveur : ${OsType}`}</p> : <p>Chargement en cours...</p>}
-      {Port ? <p>{`Serveur Port : ${Port}`}</p> : <p>Chargement en cours...</p>}
+      {Port ? <p>{`Serveur Port Production : ${Port}`}</p> : <p>Chargement en cours...</p>}
 
       </div>
     );
