@@ -4,7 +4,7 @@ import './ServerInfo.css';
 export default class ServerInfo extends Component {
 
 
-    state = { OsType: null,port: null};
+    state = { OsType: null,port: null, Axel: null};
 
      componentDidMount() {
        fetch('/api/serverinfo')
@@ -13,16 +13,20 @@ export default class ServerInfo extends Component {
        fetch('/api/serverport')
            .then(res => res.json())
            .then(port => this.setState({ Port: port.Port }));
-     }
 
+};
   render() {
     const { OsType } = this.state;
     const { Port } = this.state;
+    const { Axel } = this.state;
+
+
 
     return (
       <div className="serverinfo">
       {OsType ? <p>{`OS Serveur : ${OsType}`}</p> : <p>Chargement en cours...</p>}
       {Port ? <p>{`Serveur Port Production : ${Port}`}</p> : <p>Chargement en cours...</p>}
+      {Axel ? <p>{`lol : ${Axel}`}</p> : <p>Chargement en cours...</p>}
 
       </div>
     );

@@ -59,7 +59,7 @@ onSelection(event) {
       <div>
           <Menu pageWrapId={"page-wrap"} outerContainerId={"outer-container"} isOpen={this.state.OpenMenu}>
             <p className="menu-title">WebSolea</p>
-            <a onClick={() => this.onSelection("home")} className="menu-item" >Accueil</a>
+            <a onClick={() => this.onSelection("home")} className="menu-item">Accueil</a>
             <h2 className="menu-small-title">Aix-Les-Bains</h2>
             <a onClick={() => this.onSelection("cisco")} className="menu-item">Routeur/Switch Cisco</a>
             <a onClick={() => this.onSelection("vmware")} className="menu-item">Serveur HP VMware</a>
@@ -74,7 +74,7 @@ onSelection(event) {
           </Menu>
           <div id="outer-container">
             <main className="page-wrap" id="page-wrap">
-            {MainPage}
+              {MainPage}
             </main>
           </div>
       </div>

@@ -7,6 +7,7 @@ export default class Dhcp extends Component {
     return (
       <div>
         <h1 className="MainPageTitle">Serveur DHCP</h1>
+        <div>oui</div>
       </div>
     );
   }
