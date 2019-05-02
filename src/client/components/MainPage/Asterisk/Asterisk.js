@@ -16,9 +16,25 @@ export default class Asterisk extends Component {
 
       this.state = {
         messages: [],
-        chargementSauv: false
+        chargementSauv: false,
+        isAlive: false,
+        IP: "",
+        MAC: ""
       };
     }
+
+    componentDidMount() {
+      fetch('/api/ping')
+        .then(res => res.json())
+        .then(obj => this.setStateApi(obj));
+      };
+
+setStateApi(obj){
+this.setState({ isAlive: obj.asterisk });
+this.setState({ MAC: obj.asteriskMac });
+this.setState({ IP: obj.asteriskIP });
+
+}
 
     formatDate(date) {
       var monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"];
@@ -117,9 +133,9 @@ export default class Asterisk extends Component {
           <div className="more">
           <a href="https://vwmare.solea.fr/ui/#/console/4" className="bouton">Controler le serveur</a>
           <a href="http://asterisk.solea.fr:8080" className="bouton">Configurer le serveur</a>
-            <p className="ip">Adresse IP : XXX.XXX.XXX.XXX</p>
+            <p className="ip">Adresse IP : {this.state.IP}</p>
             <p className="domaine">Nom de domaine : asterisk.solea.fr</p>
-            <p className="mac">Adresse MAC : xx:xx:xx:xx:xx:xx:xx</p>
+            <p className="mac">Adresse MAC : {this.state.MAC}</p>
           </div>
           <div className="save">
             <a className="bouton" onClick={() => this.sauvegarder()}>Effectuer une sauvegarde</a>

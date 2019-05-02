@@ -5,6 +5,8 @@ var ping = require('ping');
 var nslookup = require('nslookup');
 const app = express();
 var SSH = require('simple-ssh');
+var arp = require('node-arp');
+
 
 
 
@@ -299,22 +301,41 @@ io.on('connection', function(socket) {
 
 
 
-
+var ipDns = "192.168.100.102";
 
 function CheckPingVwmare() {
   nslookup('vmware.solea.fr')
-    .server('8.8.8.8') // default is 8.8.8.8
-    .timeout(10 * 1000) // default is 3 * 1000 ms
+    .server(ipDns) // default is 8.8.8.8
+    .timeout(1 * 1000) // default is 3 * 1000 ms
     .end(function(err, addrs) {
       var hosts = [addrs];
+      obj.vwmareIP = addrs;
       hosts.forEach(function(host) {
         ping.sys.probe(host, function(isAlive) {
-          obj.google = isAlive;
+          obj.vwmare = isAlive;
         });
       });
     });
 }
+function CheckPingAsterisk() {
+  nslookup('asterisk.solea.fr')
+    .server(ipDns) // default is 8.8.8.8
+    .timeout(1 * 1000) // default is 3 * 1000 ms
+    .end(function(err, addrs) {
+      var hosts = addrs.toString();
+      obj.asteriskIP = hosts;
 
+      arp.getMAC(hosts, function(err, mac) {
+        if (!err) {
+          obj.asteriskMac = mac;
+        }
+      });
+
+        ping.sys.probe(hosts, function(isAlive) {
+          obj.asterisk = isAlive;
+        });
+    });
+}
 function CheckPingDns() {
   var hosts = ['1.1.1.1'];
   hosts.forEach(function(host) {
@@ -327,6 +348,7 @@ function CheckPingDns() {
 function CheckDns() {}
 
 setInterval(function() {
+  CheckPingAsterisk();
   CheckPingVwmare();
   CheckPingDns();
   CheckDns();
