@@ -9,14 +9,15 @@ var save = require('./service/sauvegarde'); // Chargement du service sauvegarde 
 require('dotenv').config(); // Chargement variable Environnement
 
 var obj = {
-  domaineNAS: process.env.DOMAINE_NAME_NAS,
-  domaineAsterisk: process.env.DOMAINE_NAME_ASTERISK,
-  domaineDHCP: process.env.DOMAINE_NAME_DHCP,
-  domaineCisco: process.env.DOMAINE_NAME_CISCO,
-  domaineWeb: process.env.DOMAINE_NAME_WEB,
-  domaineVware: process.env.DOMAINE_NAME_VWARE,
-  domaineSwitch: process.env.DOMAINE_NAME_SWITCH,
-  domaineFortigate: process.env.DOMAINE_NAME_FORTIGATE
+  domaine_nas: process.env.DOMAINE_NAME_NAS,
+  domaine_asterisk: process.env.DOMAINE_NAME_ASTERISK,
+  domaine_dhcp: process.env.DOMAINE_NAME_DHCP,
+  domaine_cisco: process.env.DOMAINE_NAME_CISCO,
+  domaine_web: process.env.DOMAINE_NAME_WEB,
+  domaine_dns: process.env.DOMAINE_NAME_DNS,
+  domaine_vware: process.env.DOMAINE_NAME_VWARE,
+  domaine_switch: process.env.DOMAINE_NAME_SWITCH,
+  domaine_fortigate: process.env.DOMAINE_NAME_FORTIGATE
 };
 const port = "80"; // Port du serveur en Production
 
@@ -90,7 +91,7 @@ io.on('connection', function(socket) {
 
   socket.on('dns', function(data) {
     nslookup(data)
-      .server("8.8.8.8")
+      .server(process.env.IP_DNS_SERVEUR)
       .timeout(1 * 1000)
       .end(function(err, addrs) {
           addrs = "" + addrs;

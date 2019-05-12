@@ -42,6 +42,27 @@ module.exports = {
                     console.log(stdout);
                 }
             }).start();
+        } else if (data = "cisco") {
+            console.log("Sauvegarde Cisco demandé.");
+            ssh.exec('/sharedfolders/.backups/cisco/sauvegarde.sh', {
+                out: function(stdout) {
+                    console.log(stdout);
+                }
+            }).start();
+        } else if (data = "web") {
+            console.log("Sauvegarde Web demandé.");
+            ssh.exec('/sharedfolders/.backups/web/sauvegarde.sh', {
+                out: function(stdout) {
+                    console.log(stdout);
+                }
+            }).start();
+        } else if (data = "switch") {
+            console.log("Sauvegarde Switch demandé.");
+            ssh.exec('/sharedfolders/.backups/switch/sauvegarde.sh', {
+                out: function(stdout) {
+                    console.log(stdout);
+                }
+            }).start();
         }
     },
     restaurer: function(data) {
