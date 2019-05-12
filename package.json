@@ -15,6 +15,7 @@
   "dependencies": {
     "@react-firebase/database": "^0.3.10",
     "date-from-num": "^1.0.1",
+    "dotenv": "^8.0.0",
     "express": "^4.16.3",
     "firebase": "^5.9.2",
     "ip": "^1.1.5",

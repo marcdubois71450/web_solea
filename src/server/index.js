@@ -4,324 +4,165 @@ const md5 = require('md5');
 var ping = require('ping');
 var nslookup = require('nslookup');
 const app = express();
-var SSH = require('simple-ssh');
 var arp = require('node-arp');
+var save = require('./service/sauvegarde'); // Chargement du service sauvegarde dans "save"
+require('dotenv').config(); // Chargement variable Environnement
 
-
-
-
-//var obj = {vmware: false, dns: false, dhcp: false, nas: false, asterisk: false, };
 var obj = {
-  google: false
+  domaineNAS: process.env.DOMAINE_NAME_NAS,
+  domaineAsterisk: process.env.DOMAINE_NAME_ASTERISK,
+  domaineDHCP: process.env.DOMAINE_NAME_DHCP,
+  domaineCisco: process.env.DOMAINE_NAME_CISCO,
+  domaineWeb: process.env.DOMAINE_NAME_WEB,
+  domaineVware: process.env.DOMAINE_NAME_VWARE,
+  domaineSwitch: process.env.DOMAINE_NAME_SWITCH,
+  domaineFortigate: process.env.DOMAINE_NAME_FORTIGATE
 };
-
-
 const port = "80"; // Port du serveur en Production
+
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------
+// ---------------------------------Serveur Express------------------------------
+// ------------------------------------------------------------------------------
 
 app.use(express.static('dist'));
 app.disable('x-powered-by');
 
+// API Server Info
 app.get('/api/serverinfo', (req, res) => res.send({
   OsType: os.type()
 }));
+
+// API Server Port
 app.get('/api/serverport', (req, res) => res.send({
   Port: port
 }));
+
+// API Mot de Passe
 app.get('/api/21232f297a57a5a743894a0e4a801fc3', (req, res) => res.send({ //Mdp: admin
   password: true
 }));
 
-app.listen(port, () => console.log('Le serveur est prêt !'));
-
-
+// API Ping
 app.route('/api/ping').get(function(req, res, next) {
   res.json(obj);
 });
 
+// Ecoute du serveur
+app.listen(port, () => console.log('Le serveur est prêt !'));
+
+
+
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------
+// ---------------------------------Serveur Socket IO----------------------------
+// ------------------------------------------------------------------------------
 
 var http = require('http');
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 server.listen(8080);
 
-var ip_nas = "nas.solea.fr";
-
 io.on('connection', function(socket) {
   socket.on('restaurer', function(data) {
-    console.log(data);
-
-    console.log(data.device);
-    console.log(data.date);
-
-    if (data.device == "asterisk") {
-          console.log("Sauvegarde Asterisk demandé.");
-          var ssh = new SSH({
-            host: ip_nas,
-            user: 'root', //Super la securité
-            pass: 'root' //Super la securité
-          });
-
-          ssh.exec('/sharedfolders/.backups/asterisk/restauration.sh '+data.date, {
-            out: function(stdout) {
-              console.log(stdout);
-            }
-          }).start();
-    } else if (data.device == "dhcp") {
-
-          console.log("Sauvegarde DHCP demandé.");
-          var ssh = new SSH({
-            host: ip_nas,
-            user: 'root', //Super la securité
-            pass: 'root' //Super la securité
-          });
-
-          ssh.exec('/sharedfolders/.backups/dhcp/restauration.sh '+data.date, {
-            out: function(stdout) {
-              console.log(stdout);
-            }
-          }).start();
-
-    } else if (data.device = "dns") {
-
-          console.log("Sauvegarde DNS demandé.");
-          var ssh = new SSH({
-            host: ip_nas,
-            user: 'root', //Super la securité
-            pass: 'root' //Super la securité
-          });
-
-          ssh.exec('/sharedfolders/.backups/dns/restauration.sh '+data.date, {
-            out: function(stdout) {
-              console.log(stdout);
-            }
-          }).start();
-
-    } else if (data.device = "nas") {
-
-          console.log("Sauvegarde NAS demandé.");
-          var ssh = new SSH({
-            host: ip_nas,
-            user: 'root', //Super la securité
-            pass: 'root' //Super la securité
-          });
-
-          ssh.exec('/sharedfolders/.backups/nas/restauration.sh '+data.date, {
-            out: function(stdout) {
-              console.log(stdout);
-            }
-          }).start();
-
-    } else if (data.device = "fortigate") {
-
-          console.log("Sauvegarde Fortigate demandé.");
-          var ssh = new SSH({
-            host: ip_nas,
-            user: 'root', //Super la securité
-            pass: 'root' //Super la securité
-          });
-
-          ssh.exec('/sharedfolders/.backups/fortigate/restauration.sh '+data.date, {
-            out: function(stdout) {
-              console.log(stdout);
-            }
-          }).start();
-
-    }
-
+    save.restaurer(data);
   }); //Fin socket io restauration
 
   socket.on('suppr', function(data) {
-    console.log(data);
-
-    console.log("Restauration : "+data.device);
-    console.log(data.date);
-
-    if (data.device == "asterisk") {
-          var ssh = new SSH({
-            host: ip_nas,
-            user: 'root', //Super la securité
-            pass: 'root' //Super la securité
-          });
-
-          ssh.exec('/sharedfolders/.backups/asterisk/suppression.sh '+data.date, {
-            out: function(stdout) {
-              console.log(stdout);
-            }
-          }).start();
-    } else if (data.device == "dhcp") {
-
-          var ssh = new SSH({
-            host: ip_nas,
-            user: 'root', //Super la securité
-            pass: 'root' //Super la securité
-          });
-
-          ssh.exec('/sharedfolders/.backups/dhcp/suppression.sh '+data.date, {
-            out: function(stdout) {
-              console.log(stdout);
-            }
-          }).start();
-
-    } else if (data.device = "dns") {
-
-          var ssh = new SSH({
-            host: ip_nas,
-            user: 'root', //Super la securité
-            pass: 'root' //Super la securité
-          });
-
-          ssh.exec('/sharedfolders/.backups/dns/suppression.sh '+data.date, {
-            out: function(stdout) {
-              console.log(stdout);
-            }
-          }).start();
-
-    } else if (data.device = "nas") {
-
-          var ssh = new SSH({
-            host: ip_nas,
-            user: 'root', //Super la securité
-            pass: 'root' //Super la securité
-          });
-
-          ssh.exec('/sharedfolders/.backups/nas/suppression.sh '+data.date, {
-            out: function(stdout) {
-              console.log(stdout);
-            }
-          }).start();
-
-    } else if (data.device = "fortigate") {
-
-          var ssh = new SSH({
-            host: ip_nas,
-            user: 'root', //Super la securité
-            pass: 'root' //Super la securité
-          });
-
-          ssh.exec('/sharedfolders/.backups/fortigate/suppression.sh '+data.date, {
-            out: function(stdout) {
-              console.log(stdout);
-            }
-          }).start();
-
-    }
-
-  });  // FIn socket io supprimier
-
-
-
-
-
-
+    save.suppr(data);
+  });  // Fin socket io suppr
 
   socket.on('sauvegarder', function(data) {
+    save.sauvegarder(data);
+  }); // Fin socket io sauvegarder
 
-    if (data == "asterisk") {
-      console.log("Sauvegarde Asterisk demandé.");
-      var ssh = new SSH({
-        host: ip_nas,
-        user: 'root', //Super la securité
-        pass: 'root' //Super la securité
+  socket.on('dns', function(data) {
+    nslookup(data)
+      .server("8.8.8.8")
+      .timeout(1 * 1000)
+      .end(function(err, addrs) {
+          addrs = "" + addrs;
+          var hosts = addrs.toString();
+          if (hosts) {
+            console.log(hosts);
+            socket.emit('dnsReponse', hosts);
+          } else {
+            hosts = "error";
+            console.log(hosts);
+            socket.emit('dnsReponse', hosts);
+          }
       });
+  }); // Fin socket io dns
 
-      ssh.exec('/sharedfolders/.backups/asterisk/sauvegarde.sh', {
-        out: function(stdout) {
-          console.log(stdout);
-        }
-      }).start();
-    } else if (data == "dhcp") {
-
-      console.log("Sauvegarde DHCP demandé.");
-      var ssh = new SSH({
-        host: ip_nas,
-        user: 'root', //Super la securité
-        pass: 'root' //Super la securité
-      });
-
-      ssh.exec('/sharedfolders/.backups/dhcp/sauvegarde.sh', {
-        out: function(stdout) {
-          console.log(stdout);
-        }
-      }).start();
-
-    } else if (data = "dns") {
-
-      console.log("Sauvegarde DNS demandé.");
-      var ssh = new SSH({
-        host: ip_nas,
-        user: 'root', //Super la securité
-        pass: 'root' //Super la securité
-      });
-
-      ssh.exec('/sharedfolders/.backups/dns/sauvegarde.sh', {
-        out: function(stdout) {
-          console.log(stdout);
-        }
-      }).start();
-
-    } else if (data = "nas") {
-
-      console.log("Sauvegarde NAS demandé.");
-      var ssh = new SSH({
-        host: ip_nas,
-        user: 'root', //Super la securité
-        pass: 'root' //Super la securité
-      });
-
-      ssh.exec('/sharedfolders/.backups/nas/sauvegarde.sh', {
-        out: function(stdout) {
-          console.log(stdout);
-        }
-      }).start();
-
-    }
-
-    else if (data = "fortigate") {
-
-      console.log("Sauvegarde Fortigate demandé.");
-      var ssh = new SSH({
-        host: ip_nas,
-        user: 'root', //Super la securité
-        pass: 'root' //Super la securité
-      });
-
-      ssh.exec('/sharedfolders/.backups/fortigate/sauvegarde.sh', {
-        out: function(stdout) {
-          console.log(stdout);
-        }
-      }).start();
-
-    }
-
-
-
-
-  });
 });
 
 
 
-var ipDns = "192.168.100.102";
 
-function CheckPingVwmare() {
-  nslookup('vmware.solea.fr')
-    .server(ipDns) // default is 8.8.8.8
-    .timeout(1 * 1000) // default is 3 * 1000 ms
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------
+// ---------------------------------Fabrication API------------------------------
+// ------------------------------------------------------------------------------
+
+
+// Demmarage des fonctions toute les X
+setInterval(function() {
+  CheckPingAsterisk();
+  CheckPingNas();
+  CheckPingDHCP();
+  CheckPingCisco();
+  CheckPingDNS();
+  CheckPingWeb();
+  CheckPingVware();
+  CheckPingSwitch();
+}, 1000);
+
+function CheckPingWeb() {
+  nslookup(process.env.DOMAINE_NAME_WEB)
+    .server(process.env.IP_DNS_SERVEUR)
+    .timeout(1 * 1000)
     .end(function(err, addrs) {
-      var hosts = [addrs];
-      obj.vwmareIP = addrs;
-      hosts.forEach(function(host) {
-        ping.sys.probe(host, function(isAlive) {
-          obj.vwmare = isAlive;
-        });
+      //Il y a peut etre une erreur ici, addrs sera peut etre undefined
+      addrs = "" + addrs;
+      var hosts = addrs.toString();
+      obj.webIP = hosts;
+
+      arp.getMAC(hosts, function(err, mac) {
+        if (!err) {
+          obj.webMac = mac;
+        }
       });
+        ping.sys.probe(hosts, function(isAlive) {
+          obj.web = isAlive;
+        });
     });
 }
+
 function CheckPingAsterisk() {
-  nslookup('asterisk.solea.fr')
-    .server(ipDns) // default is 8.8.8.8
-    .timeout(1 * 1000) // default is 3 * 1000 ms
+  nslookup(process.env.DOMAINE_NAME_ASTERISK)
+    .server(process.env.IP_DNS_SERVEUR)
+    .timeout(1 * 1000)
     .end(function(err, addrs) {
+      //Il y a peut etre une erreur ici, addrs sera peut etre undefined
+      addrs = "" + addrs;
       var hosts = addrs.toString();
       obj.asteriskIP = hosts;
 
@@ -330,26 +171,147 @@ function CheckPingAsterisk() {
           obj.asteriskMac = mac;
         }
       });
-
         ping.sys.probe(hosts, function(isAlive) {
           obj.asterisk = isAlive;
         });
     });
 }
-function CheckPingDns() {
-  var hosts = ['1.1.1.1'];
-  hosts.forEach(function(host) {
-    ping.sys.probe(host, function(isAlive) {
-      obj.google2 = isAlive;
+
+function CheckPingNas() {
+  nslookup(process.env.DOMAINE_NAME_NAS)
+    .server(process.env.IP_DNS_SERVEUR)
+    .timeout(1 * 1000)
+    .end(function(err, addrs) {
+      //Il y a peut etre une erreur ici, addrs sera peut etre undefined
+      addrs = "" + addrs;
+      var hosts = addrs.toString();
+      obj.nasIP = hosts;
+
+      arp.getMAC(hosts, function(err, mac) {
+        if (!err) {
+          obj.nasMac = mac;
+        }
+      });
+        ping.sys.probe(hosts, function(isAlive) {
+          obj.nas = isAlive;
+        });
     });
-  });
 }
 
-function CheckDns() {}
+function CheckPingDHCP() {
+  nslookup(process.env.DOMAINE_NAME_DHCP)
+    .server(process.env.IP_DNS_SERVEUR)
+    .timeout(1 * 1000)
+    .end(function(err, addrs) {
+      //Il y a peut etre une erreur ici, addrs sera peut etre undefined
+      addrs = "" + addrs;
+      var hosts = addrs.toString();
+      obj.dhcpIP = hosts;
 
-setInterval(function() {
-  CheckPingAsterisk();
-  CheckPingVwmare();
-  CheckPingDns();
-  CheckDns();
-}, 1000);
+      arp.getMAC(hosts, function(err, mac) {
+        if (!err) {
+          obj.dhcpMac = mac;
+        }
+      });
+        ping.sys.probe(hosts, function(isAlive) {
+          obj.dhcp = isAlive;
+        });
+    });
+}
+
+function CheckPingCisco() {
+  nslookup(process.env.DOMAINE_NAME_CISCO)
+    .server(process.env.IP_DNS_SERVEUR)
+    .timeout(1 * 1000)
+    .end(function(err, addrs) {
+      //Il y a peut etre une erreur ici, addrs sera peut etre undefined
+      addrs = "" + addrs;
+      var hosts = addrs.toString();
+      obj.ciscoIP = hosts;
+
+      arp.getMAC(hosts, function(err, mac) {
+        if (!err) {
+          obj.ciscoMac = mac;
+        }
+      });
+        ping.sys.probe(hosts, function(isAlive) {
+          obj.cisco = isAlive;
+        });
+    });
+}
+
+function CheckPingDNS() {
+      var hosts = process.env.IP_DNS_SERVEUR;
+      obj.dnsIP = hosts;
+      arp.getMAC(hosts, function(err, mac) {
+        if (!err) {
+          obj.dnsMac = mac;
+        }
+      });
+        ping.sys.probe(hosts, function(isAlive) {
+          obj.dns = isAlive;
+      });
+}
+
+function CheckPingVware() {
+  nslookup(process.env.DOMAINE_NAME_VWARE)
+    .server(process.env.IP_DNS_SERVEUR)
+    .timeout(1 * 1000)
+    .end(function(err, addrs) {
+      //Il y a peut etre une erreur ici, addrs sera peut etre undefined
+      addrs = "" + addrs;
+      var hosts = addrs.toString();
+      obj.vwareIP = hosts;
+
+      arp.getMAC(hosts, function(err, mac) {
+        if (!err) {
+          obj.vwareMac = mac;
+        }
+      });
+        ping.sys.probe(hosts, function(isAlive) {
+          obj.vware = isAlive;
+        });
+    });
+}
+
+function CheckPingSwitch() {
+  nslookup(process.env.DOMAINE_NAME_SWITCH)
+    .server(process.env.IP_DNS_SERVEUR)
+    .timeout(1 * 1000)
+    .end(function(err, addrs) {
+      //Il y a peut etre une erreur ici, addrs sera peut etre undefined
+      addrs = "" + addrs;
+      var hosts = addrs.toString();
+      obj.switchIP = hosts;
+
+      arp.getMAC(hosts, function(err, mac) {
+        if (!err) {
+          obj.switchMac = mac;
+        }
+      });
+        ping.sys.probe(hosts, function(isAlive) {
+          obj.switch = isAlive;
+        });
+    });
+}
+
+function CheckPingFortigate() {
+  nslookup(process.env.DOMAINE_NAME_FORTIGATE)
+    .server(process.env.IP_DNS_SERVEUR)
+    .timeout(1 * 1000)
+    .end(function(err, addrs) {
+      //Il y a peut etre une erreur ici, addrs sera peut etre undefined
+      addrs = "" + addrs;
+      var hosts = addrs.toString();
+      obj.fortigateIP = hosts;
+
+      arp.getMAC(hosts, function(err, mac) {
+        if (!err) {
+          obj.fortigateMac = mac;
+        }
+      });
+        ping.sys.probe(hosts, function(isAlive) {
+          obj.fortigate = isAlive;
+        });
+    });
+}

@@ -1,93 +1,93 @@
 @import '../../../../node_modules/npm-font-open-sans/open-sans.css';
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: 'Open Sans';
   font-weight: 300;
   font-style: normal;
-   user-select: none;
-   outline: none;
+  user-select: none;
+  outline: none;
 }
+
 *:focus {
-    outline: 0;
+  outline: 0;
 }
 
-table
-{
-	width: 750px;
-	margin:50px auto;
+table {
+  width: 750px;
+  margin: 50px auto;
 }
 
-tr:nth-of-type(odd)
-{
-	background: #eee;
+tr:nth-of-type(odd) {
+  background: #eee;
 }
 
-th
-{
-	background: #373a47;
-	color: white;
-	font-weight: bold;
+th {
+  background: #373a47;
+  color: white;
+  font-weight: bold;
 }
 
-td, th
-{
-	padding: 10px;
-	text-align: left;
-	font-size: 18px;
+td, th {
+  padding: 10px;
+  text-align: left;
+  font-size: 18px;
 }
 
-.device
-{
-	text-align: center;
+.device {
+  text-align: center;
 }
 
-.bouton
-{
-	background: #373a47;
-	color: white;
-	padding: 10px;
-	text-decoration: none;
-	margin: 20px;
-	font-size: 20px;
-	cursor: pointer;
+.bouton {
+  background: #373a47;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  margin: 20px;
+  font-size: 20px;
+  cursor: pointer;
 }
 
-.bouton:hover
-{
-	background: white;
-	color: black;
+.bouton:hover {
+  background: white;
+  color: black;
 }
 
-.ip
-{
-	font-size: 25px;
-	margin: 20px;
-	margin-top: 30px;
-}
-.domaine{
+.ip {
   font-size: 25px;
   margin: 20px;
-
-}
-.mac
-{
-	font-size: 25px;
-	margin: 20px;
-	margin-bottom: 35px;
+  margin-top: 30px;
 }
 
-.restaurer
-{
-	cursor: pointer;
-	background: #373a47;
-	color: white;
-	width: 100px;
-	text-align: center;
+.domaine {
+  font-size: 25px;
+  margin: 20px;
 }
 
-.restaurer:hover
-{
-	background: white;
-	color: black;
+.mac {
+  font-size: 25px;
+  margin: 20px;
+  margin-bottom: 35px;
+}
+
+.save-table {
+  margin-bottom: 0;
+  padding-bottom: 50px;
+}
+
+.restaurer {
+  cursor: pointer;
+  background: #373a47;
+  color: white;
+  width: 100px;
+  text-align: center;
+}
+
+.restaurer:hover {
+  background: white;
+  color: black;
 }

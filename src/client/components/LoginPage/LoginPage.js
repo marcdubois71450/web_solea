@@ -10,7 +10,7 @@ export default class LoginPage extends Component {
   constructor(props) {
         super(props);
         this.state = {
-            Password:""
+            Password: false
         };
         this.onChangePassword = this.onChangePassword.bind(this);
     }
@@ -25,7 +25,6 @@ onChangePassword (event) {
 
  render() {
    const { Password } = this.state;
-
     return (
       <div>
       {Password ?

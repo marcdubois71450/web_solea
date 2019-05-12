@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './Ldap.css';
+import './Switch.css';
 import { render } from 'react-dom';
 
-export default class Ldap extends Component {
+export default class Switch extends Component {
   render() {
     return (
       <div>
-        <h1 className="MainPageTitle">Serveur LDAP</h1>
+        <h1 className="MainPageTitle">Switch</h1>
       </div>
     );
   }
