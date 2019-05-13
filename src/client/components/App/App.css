@@ -4,6 +4,10 @@ html {
   height: 100%;
 }
 
+#term {
+  width: 60vw;
+}
+
 body {
   margin: 0;
   font-family: 'Open Sans';
@@ -83,6 +87,10 @@ td, th {
   font-size: 25px;
   margin: 20px;
   margin-bottom: 35px;
+}
+
+.save {
+  padding-top: 20px;
 }
 
 .list-save {

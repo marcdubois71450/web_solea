@@ -74,9 +74,20 @@ app.listen(port, () => console.log('Le serveur est prêt !'));
 var http = require('http');
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
+var utf8 = require('utf8');
+var SSHClient = require('ssh2').Client;
 server.listen(8080);
 
 io.on('connection', function(socket) {
+  socket.on('createNewServer', function(machineConfig) {
+        console.log(machineConfig)
+        createNewServer(machineConfig, socket);
+    })
+
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+      });
+
   socket.on('restaurer', function(data) {
     save.restaurer(data);
   }); //Fin socket io restauration
@@ -96,7 +107,7 @@ io.on('connection', function(socket) {
       .end(function(err, addrs) {
           addrs = "" + addrs;
           var hosts = addrs.toString();
-          if (hosts) {
+          if (hosts && hosts !== "undefined") {
             console.log(hosts);
             socket.emit('dnsReponse', hosts);
           } else {
@@ -113,6 +124,43 @@ io.on('connection', function(socket) {
 
 
 
+// ------------------------------------------------------------------------------
+// ---------------------------------Service SSHClient----------------------------
+// ------------------------------------------------------------------------------
+
+
+function createNewServer(machineConfig, socket) {
+    var ssh = new SSHClient();
+    let {msgId, ip, username, password} = machineConfig;
+    ssh.on('ready', function () {
+        socket.emit(msgId, '\r\n***' + ip + ' SSH CONNECTION ESTABLISHED ***\r\n');
+        ssh.shell(function(err, stream) {
+            if(err) {
+                return socket.emit(msgId, '\r\n*** SSH SHELL ERROR: ' + err.message + ' ***\r\n');
+            }
+            socket.on(msgId, function (data) {
+                stream.write(data);
+            });
+            stream.on('data', function (d) {
+                socket.emit(msgId, utf8.decode(d.toString('binary')));
+            }).on('close', function () {
+                ssh.end();
+            });
+        })
+    }).on('close', function () {
+        socket.emit(msgId, '\r\n*** SSH CONNECTION CLOSED ***\r\n');
+    }).on('error', function (err) {
+        console.log(err);
+        socket.emit(msgId, '\r\n*** SSH CONNECTION ERROR: ' + err.message + ' ***\r\n');
+    }).connect({
+        host: ip,
+        port: 22,
+        username: username,
+        password: password
+    });
+}
+
+
 
 
 
@@ -123,6 +171,7 @@ io.on('connection', function(socket) {
 // ---------------------------------Fabrication API------------------------------
 // ------------------------------------------------------------------------------
 
+//CheckPingAsterisk();
 
 // Demmarage des fonctions toute les X
 setInterval(function() {
@@ -134,7 +183,7 @@ setInterval(function() {
   CheckPingWeb();
   CheckPingVware();
   CheckPingSwitch();
-}, 1000);
+}, 10000);
 
 function CheckPingWeb() {
   nslookup(process.env.DOMAINE_NAME_WEB)

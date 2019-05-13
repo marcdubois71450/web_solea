@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+var ReactDOM = require('react-dom');
 import './Asterisk.css';
 import { render } from 'react-dom';
 import openSocket from 'socket.io-client';
 import { database } from '../firebase';
 import dateFromNum from 'date-from-num';
+import Modal from 'react-responsive-modal';
+import "xterm/dist/xterm.css"
+import { Terminal } from 'xterm';
+import * as fit from 'xterm/lib/addons/fit/fit';
 
 const socket = openSocket('http://'+window.location.hostname+':8080');
 
@@ -23,7 +28,7 @@ export default class Asterisk extends Component {
         MAC: "",
         domaineName: "",
         open: false,
-        modale: "none"
+        term: null
     };
 }
 
@@ -40,7 +45,6 @@ componentDidMount() {
         .then(res => res.json())
         .then(obj => this.setStateApi(obj));
 };
-
 componentWillMount() {
     const messagesRef = database.ref(myDevice)
         .orderByKey()
@@ -88,6 +92,7 @@ setStateApi(obj) {
     });
 }
 
+
 formatDate(date) {
     var monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"];
     var day = date.getDate();
@@ -103,15 +108,34 @@ formatHeure(date) {
     }
     return hours + 'h' + minutes;
 }
-onOpenModal = () => {
-this.setState({ open: true,
-                modale: "lycee"});
-                console.log(this.state.modale);
-              };
-onCloseModal = () => {
+
+onOpenModal() {
+  this.setState({
+      open: true
+  });
+  setTimeout(() => {
+    Terminal.applyAddon(fit);
+    this.term = new Terminal();
+    this.term.open(ReactDOM.findDOMNode(this.refs.term));
+    this.term.fit();
+    this.createServer1();
+  }, 50);
+};
+onCloseModal() {
   this.setState({ open: false });
 };
-
+createServer1() {
+    const sshSrv = {msgId: 'term', ip: this.state.domaineName, username: "root", password: "root"};
+    socket.emit("createNewServer", sshSrv);
+    const myTerm = this.term;
+    myTerm.on("data", function(data) {
+        socket.emit('term', data);
+    })
+    socket.on("term", function (data) {
+        console.log(data);
+        myTerm.write(data);
+    })
+};
 
 
 
@@ -174,32 +198,25 @@ suppr = (date) => {
 
 
 
-
-
-
 // ------------------------------------------------------------------------------
 // ---------------------------------Rendu JSX------------------------------------
 // ------------------------------------------------------------------------------
-
 render() {
   var confLink = "http://"+this.state.domaineName+":8080";
   var consoleLink = "https://vwmare.solea.fr/ui/#/console/4";
-
+  const { open, modale} = this.state;
     return (
       <div>
-
-      <Modal open={open} onClose={this.onCloseModal} blockScroll={!open} center>
-           <SSHClient />
+      <Modal open={open}  onClose={() => this.onCloseModal()} blockScroll={!open} center>
+      <div id="term" ref="term"></div>
       </Modal>
-
-
         <div>
           <h1 className="MainPageTitle">Serveur Asterisk</h1>
         </div>
         <div className="device">
         {this.state.isAlive ?
           <div className="more">
-            <a onClick={this.onOpenModal} target="_blank" className="bouton">Controler le serveur</a>
+            <a onClick={() => this.onOpenModal()} target="_blank" className="bouton">Controler le serveur</a>
             <a href={confLink} target="_blank" className="bouton">Configurer le serveur</a>
             <p className="ip">Adresse IP : {this.state.IP}</p>
             <p className="domaine">Nom de domaine : {this.state.domaineName}</p>
