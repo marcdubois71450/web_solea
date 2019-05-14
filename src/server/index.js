@@ -15,11 +15,12 @@ var obj = {
   domaine_cisco: process.env.DOMAINE_NAME_CISCO,
   domaine_web: process.env.DOMAINE_NAME_WEB,
   domaine_dns: process.env.DOMAINE_NAME_DNS,
-  domaine_vware: process.env.DOMAINE_NAME_VWARE,
+  domaine_vmware: process.env.DOMAINE_NAME_VMWARE,
   domaine_switch: process.env.DOMAINE_NAME_SWITCH,
   domaine_fortigate: process.env.DOMAINE_NAME_FORTIGATE
 };
 const port = "80"; // Port du serveur en Production
+
 
 
 
@@ -76,17 +77,19 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var utf8 = require('utf8');
 var SSHClient = require('ssh2').Client;
-server.listen(8080);
+server.listen(8081);
 
 io.on('connection', function(socket) {
-  socket.on('createNewServer', function(machineConfig) {
-        console.log(machineConfig)
-        createNewServer(machineConfig, socket);
-    })
+  console.log("new connection");
 
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
-      });
+socket.on('createNewServer', function(machineConfig) {
+      console.log(machineConfig)
+      createNewServer(machineConfig, socket);
+  })
+
+  socket.on('disconnect', function(){
+      console.log('user disconnected');
+    });
 
   socket.on('restaurer', function(data) {
     save.restaurer(data);
@@ -97,6 +100,7 @@ io.on('connection', function(socket) {
   });  // Fin socket io suppr
 
   socket.on('sauvegarder', function(data) {
+    console.log(data);
     save.sauvegarder(data);
   }); // Fin socket io sauvegarder
 
@@ -128,28 +132,31 @@ io.on('connection', function(socket) {
 // ---------------------------------Service SSHClient----------------------------
 // ------------------------------------------------------------------------------
 
-
 function createNewServer(machineConfig, socket) {
-    var ssh = new SSHClient();
+    var ssh2 = new SSHClient();
     let {msgId, ip, username, password} = machineConfig;
-    ssh.on('ready', function () {
+    ssh2.on('ready', function () {
         socket.emit(msgId, '\r\n***' + ip + ' SSH CONNECTION ESTABLISHED ***\r\n');
-        ssh.shell(function(err, stream) {
+        ssh2.shell(function(err, stream) {
             if(err) {
                 return socket.emit(msgId, '\r\n*** SSH SHELL ERROR: ' + err.message + ' ***\r\n');
             }
-            socket.on(msgId, function (data) {
+            socket.on(msgId, (data) => {
                 stream.write(data);
+                console.log("Reception : "+ data);
             });
             stream.on('data', function (d) {
+              console.log("Emission : "+ utf8.decode(d.toString('binary')));
                 socket.emit(msgId, utf8.decode(d.toString('binary')));
             }).on('close', function () {
-                ssh.end();
+                ssh2.end();
+                console.log("test2");
             });
         })
     }).on('close', function () {
+      console.log("test");
         socket.emit(msgId, '\r\n*** SSH CONNECTION CLOSED ***\r\n');
-    }).on('error', function (err) {
+     }).on('error', function (err) {
         console.log(err);
         socket.emit(msgId, '\r\n*** SSH CONNECTION ERROR: ' + err.message + ' ***\r\n');
     }).connect({
@@ -177,6 +184,7 @@ function createNewServer(machineConfig, socket) {
 setInterval(function() {
   CheckPingAsterisk();
   CheckPingNas();
+  CheckPingFortigate();
   CheckPingDHCP();
   CheckPingCisco();
   CheckPingDNS();
@@ -223,6 +231,27 @@ function CheckPingAsterisk() {
       });
         ping.sys.probe(hosts, function(isAlive) {
           obj.asterisk = isAlive;
+        });
+    });
+}
+
+function CheckPingFortigate() {
+  nslookup(process.env.DOMAINE_NAME_ASTERISK)
+    .server(process.env.IP_DNS_SERVEUR)
+    .timeout(1 * 1000)
+    .end(function(err, addrs) {
+      //Il y a peut etre une erreur ici, addrs sera peut etre undefined
+      addrs = "" + addrs;
+      var hosts = addrs.toString();
+      obj.fortigateIP = hosts;
+
+      arp.getMAC(hosts, function(err, mac) {
+        if (!err) {
+          obj.fortigateMac = mac;
+        }
+      });
+        ping.sys.probe(hosts, function(isAlive) {
+          obj.fortigate = isAlive;
         });
     });
 }
@@ -304,22 +333,23 @@ function CheckPingDNS() {
 }
 
 function CheckPingVware() {
-  nslookup(process.env.DOMAINE_NAME_VWARE)
+  nslookup(process.env.DOMAINE_NAME_VMWARE)
     .server(process.env.IP_DNS_SERVEUR)
     .timeout(1 * 1000)
     .end(function(err, addrs) {
       //Il y a peut etre une erreur ici, addrs sera peut etre undefined
       addrs = "" + addrs;
       var hosts = addrs.toString();
-      obj.vwareIP = hosts;
+      obj.vmwareIP = hosts;
+
 
       arp.getMAC(hosts, function(err, mac) {
         if (!err) {
-          obj.vwareMac = mac;
+          obj.vmwareMac = mac;
         }
       });
         ping.sys.probe(hosts, function(isAlive) {
-          obj.vware = isAlive;
+          obj.vmware = isAlive;
         });
     });
 }

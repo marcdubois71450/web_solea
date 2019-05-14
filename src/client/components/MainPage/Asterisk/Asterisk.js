@@ -10,7 +10,7 @@ import "xterm/dist/xterm.css"
 import { Terminal } from 'xterm';
 import * as fit from 'xterm/lib/addons/fit/fit';
 
-const socket = openSocket('http://'+window.location.hostname+':8080');
+const socket = openSocket('http://'+window.location.hostname+':8081');
 
 var myDevice = "asterisk";
 
@@ -28,8 +28,11 @@ export default class Asterisk extends Component {
         MAC: "",
         domaineName: "",
         open: false,
-        term: null
+        term: null,
+        firstterm: true,
+        socketUse: false
     };
+
 }
 
 
@@ -41,11 +44,15 @@ export default class Asterisk extends Component {
 // ------------------------------------------------------------------------------
 
 componentDidMount() {
+  Terminal.applyAddon(fit);
+
     fetch('/api/ping')
         .then(res => res.json())
         .then(obj => this.setStateApi(obj));
+
 };
 componentWillMount() {
+
     const messagesRef = database.ref(myDevice)
         .orderByKey()
         .limitToLast(100);
@@ -113,29 +120,44 @@ onOpenModal() {
   this.setState({
       open: true
   });
-  setTimeout(() => {
-    Terminal.applyAddon(fit);
-    this.term = new Terminal();
+this.term = new Terminal();
+  setTimeout( () => {
     this.term.open(ReactDOM.findDOMNode(this.refs.term));
     this.term.fit();
     this.createServer1();
-  }, 50);
+  }, 1000);
+
+
+
 };
+
 onCloseModal() {
+  console.log("Closeee modal");
   this.setState({ open: false });
+  window.location.reload();
+
 };
-createServer1() {
+createServer1 = () => {
     const sshSrv = {msgId: 'term', ip: this.state.domaineName, username: "root", password: "root"};
     socket.emit("createNewServer", sshSrv);
-    const myTerm = this.term;
-    myTerm.on("data", function(data) {
+    this.term.on("data", function(data) {
+        console.log("Emition : "+ data);
         socket.emit('term', data);
     })
-    socket.on("term", function (data) {
-        console.log(data);
-        myTerm.write(data);
+    console.log(this.state.socketUse);
+      console.log("Je me cree" + this.state.socketUse);
+      socket.on("term", data => {
+        this.setState({ socketUse: true });
+        console.log("Reception : "+ data);
+          this.term.write(data);
+      })
+
+    socket.on("end", function () {
+        socket.disconnect();
+        this.term.destroy();
     })
 };
+
 
 
 
@@ -207,8 +229,8 @@ render() {
   const { open, modale} = this.state;
     return (
       <div>
-      <Modal open={open}  onClose={() => this.onCloseModal()} blockScroll={!open} center>
-      <div id="term" ref="term"></div>
+      <Modal open={open} onAfterOpen={this.afterOpenModal}  onClose={() => this.onCloseModal()} blockScroll={!open} center="true">
+        <div id="term" ref="term"></div>
       </Modal>
         <div>
           <h1 className="MainPageTitle">Serveur Asterisk</h1>

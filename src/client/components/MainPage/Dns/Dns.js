@@ -10,7 +10,7 @@ import "xterm/dist/xterm.css"
 import { Terminal } from 'xterm';
 import * as fit from 'xterm/lib/addons/fit/fit';
 
-const socket = openSocket('http://'+window.location.hostname+':8080');
+const socket = openSocket('http://'+window.location.hostname+':8081');
 
 var myDevice = "dns";
 
@@ -149,6 +149,8 @@ onClickDNS () {
   // Fonction activer lorsque le modal ClientSSH est fermer
   onCloseModal() {
     this.setState({ open: false });
+    window.location.reload();
+
   };
   // Creation serveur ClientSSH
   createServer1() {

@@ -21,6 +21,7 @@ export default class Admin extends Component {
             selected: 'home',
             OpenMenu: false
         };
+
     }
 
 onSelection(event) {
@@ -28,6 +29,9 @@ onSelection(event) {
   this.setState({ selected: event });
   this.setState({ OpenMenu: false });
 }
+componentDidMount() {
+};
+
 
   render() {
     let MainPage;
@@ -70,7 +74,7 @@ onSelection(event) {
             <a onClick={() => this.onSelection("asterisk")} className="menu-item">Serveur Asterisk</a>
             <a onClick={() => this.onSelection("file")} className="menu-item">Serveur de fichier</a>
             <h2 className="menu-small-title">Valence</h2>
-            <a onClick={() => this.onSelection("cisco")} className="menu-item">Routeur/Switch Cisco</a>
+            <a onClick={() => this.onSelection("cisco")} className="menu-item">Routeur Cisco</a>
           </Menu>
           <div id="outer-container">
             <main className="page-wrap" id="page-wrap">
