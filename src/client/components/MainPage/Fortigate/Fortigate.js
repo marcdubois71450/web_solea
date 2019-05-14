@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 var ReactDOM = require('react-dom');
-import './FOrtigate.css';
+import './Fortigate.css';
 import { render } from 'react-dom';
 import openSocket from 'socket.io-client';
 import { database } from '../firebase';
