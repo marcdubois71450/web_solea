@@ -19,7 +19,7 @@ var obj = {
   domaine_switch: process.env.DOMAINE_NAME_SWITCH,
   domaine_fortigate: process.env.DOMAINE_NAME_FORTIGATE
 };
-const port = "80"; // Port du serveur en Production
+const port = "3000"; // Port du serveur en Production
 
 
 
