@@ -4,4 +4,3 @@ dist
 *.log
 yarn.lock
 .DS_Store
-.env # This contains secrets, don't store in source control
