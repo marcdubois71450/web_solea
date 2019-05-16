@@ -10,7 +10,7 @@ import "xterm/dist/xterm.css"
 import { Terminal } from 'xterm';
 import * as fit from 'xterm/lib/addons/fit/fit';
 
-const socket = openSocket('http://'+window.location.hostname+':8081');
+const socket = openSocket('https://'+window.location.hostname+':8081');
 
 var myDevice = "nas";
 
@@ -237,7 +237,7 @@ render() {
         </div>
         <div className="device">
         <br/>         <br/>
-      
+
         {this.state.isAlive ?
           <div className="more">
             <a onClick={() => this.onOpenModal()} target="_blank" className="bouton">Controler le serveur</a>

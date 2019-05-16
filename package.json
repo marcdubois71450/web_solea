@@ -5,9 +5,9 @@
   "main": "src/server/index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "npm run build && node src/server/index.js",
+    "start": "npm run build && NODE_ENV=prod node src/server/index.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "server": "nodemon src/server/index.js",
+    "server": "NODE_ENV=dev nodemon src/server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Marc Dubois",
@@ -20,6 +20,8 @@
     "dotenv": "^8.0.0",
     "express": "^4.16.3",
     "firebase": "^5.9.2",
+    "fs": "0.0.1-security",
+    "https": "^1.0.0",
     "ip": "^1.1.5",
     "js-md5": "^0.7.3",
     "ls": "^0.2.1",

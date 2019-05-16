@@ -19,7 +19,7 @@ var obj = {
   domaine_switch: process.env.DOMAINE_NAME_SWITCH,
   domaine_fortigate: process.env.DOMAINE_NAME_FORTIGATE
 };
-const port = "3000"; // Port du serveur en Production
+const port = "2000"; // Port du serveur en Production
 
 
 
@@ -71,13 +71,21 @@ app.listen(port, () => console.log('Le serveur est prêt !'));
 // ------------------------------------------------------------------------------
 // ---------------------------------Serveur Socket IO----------------------------
 // ------------------------------------------------------------------------------
-
-var http = require('http');
-var server = http.createServer(app);
-var io = require('socket.io').listen(server);
+var fs = require('fs');
+var https = require('https');
+var server = https.createServer(app);
 var utf8 = require('utf8');
 var SSHClient = require('ssh2').Client;
-server.listen(8081);
+
+var server = https.createServer({
+  key: fs.readFileSync('./../https/www.solea.ml/privkey.pem'),
+  cert: fs.readFileSync('./../https/www.solea.ml/cert.pem'),
+  ca: fs.readFileSync('./../https/www.solea.ml/chain.pem')
+}, app).listen(8081, () => {
+  console.log('Socket IO Listening ...')
+})
+
+var io = require('socket.io').listen(server);
 
 io.on('connection', function(socket) {
   console.log("new connection");
