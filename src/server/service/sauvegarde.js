@@ -77,18 +77,6 @@ module.exports = {
                     console.log(stdout);
                 }
             }).start();
-        } else if (data == "web") {
-          var ssh = new SSH2({
-              host: process.env.DOMAINE_NAME_NAS,
-              user: 'root', //Super la securité
-              pass: 'root' //Super la securité
-          });
-            console.log("Sauvegarde Web demandé.");
-            ssh.exec('/sharedfolders/.backups/web/sauvegarde.sh', {
-                out: function(stdout) {
-                    console.log(stdout);
-                }
-            }).start();
         } else if (data == "switch") {
           var ssh = new SSH2({
               host: process.env.DOMAINE_NAME_NAS,
@@ -174,6 +162,18 @@ module.exports = {
           });
             console.log("Restauration Fortigate demandé.");
             ssh.exec('/sharedfolders/.backups/fortigate/restauration.sh ' + data.date, {
+                out: function(stdout) {
+                    console.log(stdout);
+                }
+            }).start();
+        } else if (data.device == "cisco") {
+          var ssh = new SSH2({
+              host: process.env.DOMAINE_NAME_NAS,
+              user: 'root', //Super la securité
+              pass: 'root' //Super la securité
+          });
+            console.log("Restauration Cisco demandé.");
+            ssh.exec('/sharedfolders/.backups/cisco/restauration.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
