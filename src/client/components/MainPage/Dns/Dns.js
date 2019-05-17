@@ -255,7 +255,6 @@ render() {
             <a onClick={() => this.onOpenModal()} target="_blank" className="bouton">Controler le serveur</a>            <a href={confLink} target="_blank" className="bouton">Configurer le serveur</a>
             <p className="ip">Adresse IP : {this.state.IP}</p>
             <p className="domaine">Nom de domaine : {this.state.domaineName}</p>
-            <p className="domaine">Adresse MAC : {this.state.MAC}</p>
             <input className="dnsinput" onChange={this.onChangeDNS} placeholder="www.example.com" type="text" />
             <a className="bouton" onClick={this.onClickDNS}>Tester ce DNS</a>
             <div>

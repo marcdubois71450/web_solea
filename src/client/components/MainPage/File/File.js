@@ -244,7 +244,6 @@ render() {
             <a href={confLink} target="_blank" className="bouton">Configurer le serveur</a>
             <p className="ip">Adresse IP : {this.state.IP}</p>
             <p className="domaine">Nom de domaine : {this.state.domaineName}</p>
-            <p className="mac">Adresse MAC : {this.state.MAC}</p>
           </div>
           :
           <div className="more">

@@ -211,11 +211,6 @@ function CheckPingWeb() {
       var hosts = addrs.toString();
       obj.webIP = hosts;
 
-      arp.getMAC(hosts, function(err, mac) {
-        if (!err) {
-          obj.webMac = mac;
-        }
-      });
         ping.sys.probe(hosts, function(isAlive) {
           obj.web = isAlive;
         });
@@ -232,11 +227,6 @@ function CheckPingAsterisk() {
       var hosts = addrs.toString();
       obj.asteriskIP = hosts;
 
-      arp.getMAC(hosts, function(err, mac) {
-        if (!err) {
-          obj.asteriskMac = mac;
-        }
-      });
         ping.sys.probe(hosts, function(isAlive) {
           obj.asterisk = isAlive;
         });
@@ -253,11 +243,6 @@ function CheckPingFortigate() {
       var hosts = addrs.toString();
       obj.fortigateIP = hosts;
 
-      arp.getMAC(hosts, function(err, mac) {
-        if (!err) {
-          obj.fortigateMac = mac;
-        }
-      });
         ping.sys.probe(hosts, function(isAlive) {
           obj.fortigate = isAlive;
         });
@@ -274,11 +259,6 @@ function CheckPingNas() {
       var hosts = addrs.toString();
       obj.nasIP = hosts;
 
-      arp.getMAC(hosts, function(err, mac) {
-        if (!err) {
-          obj.nasMac = mac;
-        }
-      });
         ping.sys.probe(hosts, function(isAlive) {
           obj.nas = isAlive;
         });
@@ -295,11 +275,6 @@ function CheckPingDHCP() {
       var hosts = addrs.toString();
       obj.dhcpIP = hosts;
 
-      arp.getMAC(hosts, function(err, mac) {
-        if (!err) {
-          obj.dhcpMac = mac;
-        }
-      });
         ping.sys.probe(hosts, function(isAlive) {
           obj.dhcp = isAlive;
         });
@@ -316,11 +291,6 @@ function CheckPingCisco() {
       var hosts = addrs.toString();
       obj.ciscoIP = hosts;
 
-      arp.getMAC(hosts, function(err, mac) {
-        if (!err) {
-          obj.ciscoMac = mac;
-        }
-      });
         ping.sys.probe(hosts, function(isAlive) {
           obj.cisco = isAlive;
         });
@@ -330,11 +300,6 @@ function CheckPingCisco() {
 function CheckPingDNS() {
       var hosts = process.env.IP_DNS_SERVEUR;
       obj.dnsIP = hosts;
-      arp.getMAC(hosts, function(err, mac) {
-        if (!err) {
-          obj.dnsMac = mac;
-        }
-      });
         ping.sys.probe(hosts, function(isAlive) {
           obj.dns = isAlive;
       });
@@ -350,12 +315,6 @@ function CheckPingVware() {
       var hosts = addrs.toString();
       obj.vmwareIP = hosts;
 
-
-      arp.getMAC(hosts, function(err, mac) {
-        if (!err) {
-          obj.vmwareMac = mac;
-        }
-      });
         ping.sys.probe(hosts, function(isAlive) {
           obj.vmware = isAlive;
         });
@@ -372,11 +331,6 @@ function CheckPingSwitch() {
       var hosts = addrs.toString();
       obj.switchIP = hosts;
 
-      arp.getMAC(hosts, function(err, mac) {
-        if (!err) {
-          obj.switchMac = mac;
-        }
-      });
         ping.sys.probe(hosts, function(isAlive) {
           obj.switch = isAlive;
         });
@@ -392,12 +346,6 @@ function CheckPingFortigate() {
       addrs = "" + addrs;
       var hosts = addrs.toString();
       obj.fortigateIP = hosts;
-
-      arp.getMAC(hosts, function(err, mac) {
-        if (!err) {
-          obj.fortigateMac = mac;
-        }
-      });
         ping.sys.probe(hosts, function(isAlive) {
           obj.fortigate = isAlive;
         });
