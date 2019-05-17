@@ -224,7 +224,7 @@ suppr = (date) => {
 // ---------------------------------Rendu JSX------------------------------------
 // ------------------------------------------------------------------------------
 render() {
-  var confLink = "http://"+this.state.domaineName+"/";
+  var confLink = "http://"+this.state.IP+"/";
   const { open, modale} = this.state;
     return (
       <div>
