@@ -263,7 +263,7 @@ render() {
              {this.state.chargementSauv &&
                <tr>
                  <td data-column="Date">Sauvegarde en cours...</td>
-                 <td data-column="Heure">Sauvegarde en cours...</td>
+                 <td data-column="Heure">Temps estimé 30s...</td>
                </tr>
              }
              <tr className="hide"></tr>

@@ -72,7 +72,7 @@ componentDidMount() {
             <a onClick={() => this.onSelection("dns")} className="menu-item">Serveur DNS</a>
             <a onClick={() => this.onSelection("web")} className="menu-item">Serveur WEB</a>
             <a onClick={() => this.onSelection("asterisk")} className="menu-item">Serveur Asterisk</a>
-            <a onClick={() => this.onSelection("file")} className="menu-item">Serveur de fichier</a>
+            <a onClick={() => this.onSelection("file")} className="menu-item">Serveur NAS</a>
             <h2 className="menu-small-title">Valence</h2>
             <a onClick={() => this.onSelection("cisco")} className="menu-item">Routeur Cisco</a>
           </Menu>

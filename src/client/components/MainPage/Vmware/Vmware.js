@@ -237,7 +237,7 @@ render() {
         <div className="device">
         {this.state.isAlive ?
           <div className="more">
-            <a href={confLink} target="_blank" className="bouton">Configurer le serveur</a>
+            <a href={confLink} target="_blank" className="bouton">Configurer ESXI</a>
             <p className="ip">Adresse IP : {this.state.IP}</p>
             <p className="domaine">Nom de domaine : {this.state.domaineName}</p>
           </div>
@@ -250,7 +250,7 @@ render() {
 
           <div className="save">
             {this.state.isAlive ?
-               <a className="bouton" onClick={() => this.sauvegarder()}>Effectuer une sauvegarde</a>
+               <a className="bouton" onClick={() => this.sauvegarder()}>Effectuer une sauvegarde des VMs</a>
                :
                 <div className="list-save"><div className="list-save2">Liste des sauvegardes :</div></div>
              }

@@ -238,8 +238,8 @@ render() {
         <div className="device">
         {this.state.isAlive ?
           <div className="more">
-            <a onClick={() => this.onOpenModal()} target="_blank" className="bouton">Controler le serveur</a>
-            <a href={confLink} target="_blank" className="bouton">Configurer le serveur</a>
+            <a onClick={() => this.onOpenModal()} target="_blank" className="bouton">Controler le routeur</a>
+            <a href={confLink} target="_blank" className="bouton">Configurer le routeur</a>
             <p className="ip">Adresse IP : {this.state.IP}</p>
             <p className="domaine">Nom de domaine : {this.state.domaineName}</p>
           </div>

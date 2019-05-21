@@ -237,7 +237,7 @@ render() {
         <div className="device">
         {this.state.isAlive ?
           <div className="more">
-            <a href={confLink} target="_blank" className="bouton">Configurer le serveur</a>
+            <a href={confLink} target="_blank" className="bouton">Configurer le switch</a>
             <p className="ip">Adresse IP : {this.state.IP}</p>
             <p className="domaine">Nom de domaine : {this.state.domaineName}</p>
           </div>
@@ -248,40 +248,6 @@ render() {
           </div>
         }
 
-          <div className="save">
-            {this.state.isAlive ?
-               <a className="bouton" onClick={() => this.sauvegarder()}>Effectuer une sauvegarde</a>
-               :
-                <div className="list-save"><div className="list-save2">Liste des sauvegardes :</div></div>
-             }
-
-        <table className="save-table">
-             <thead>
-               <tr>
-                 <th>Dates</th>
-                 <th>Heures</th>
-               </tr>
-             </thead>
-             <tbody>
-             {this.state.chargementSauv &&
-               <tr>
-                 <td data-column="Date">Sauvegarde en cours...</td>
-                 <td data-column="Heure">Sauvegarde en cours...</td>
-               </tr>
-             }
-             <tr className="hide"></tr>
-             {this.state.messages.map(message =>
-               <tr>
-                 <td data-column="Date">{message.date}</td>
-                 <td data-column="Heure">{message.heure}</td>
-                  {this.state.isAlive && <td className="restaurer" onClick={() => this.restaurer(message.id)} data-column="Restaurer la sauvegarde">Restaurer</td>}
-                  <td className="hide"></td>
-                  {this.state.isAlive && <td className="supprimer" onClick={() => this.suppr(message.id)} data-column="Supprimer la sauvegarde">Supprimer</td>}
-               </tr>
-             )}
-             </tbody>
-           </table>
-          </div>
         </div>
       </div>
     );
