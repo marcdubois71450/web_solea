@@ -1,6 +1,6 @@
 {
   "name": "web_solea",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Project of L3 TRI Le Bourget Du Lac",
   "main": "src/server/index.js",
   "scripts": {
