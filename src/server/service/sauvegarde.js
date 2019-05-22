@@ -12,7 +12,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Sauvegarde Asterisk demandé.");
-            ssh.exec('/sharedfolders/.backups/asterisk/sauvegarde.sh', {
+            ssh.exec('/sharedfolders/asterisk/sauvegarde.sh', {
                 out: function(stdout) {
                     console.log("ici : "+stdout);
                 }
@@ -24,7 +24,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Sauvegarde DHCP demandé.");
-            ssh.exec('/sharedfolders/.backups/dhcp/sauvegarde.sh', {
+            ssh.exec('/sharedfolders/dhcp/sauvegarde.sh', {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -36,7 +36,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Sauvegarde DNS demandé.");
-            ssh.exec('/sharedfolders/.backups/dns/sauvegarde.sh', {
+            ssh.exec('/sharedfolders/dns/sauvegarde.sh', {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -48,7 +48,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Sauvegarde NAS demandé.");
-            ssh.exec('/sharedfolders/.backups/nas/sauvegarde.sh', {
+            ssh.exec('/sharedfolders/nas/sauvegarde.sh', {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -60,7 +60,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Sauvegarde Fortigate demandé.");
-            ssh.exec('/sharedfolders/.backups/fortigate/sauvegarde.sh', {
+            ssh.exec('/sharedfolders/fortigate/sauvegarde.sh', {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -72,7 +72,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Sauvegarde Cisco demandé.");
-            ssh.exec('/sharedfolders/.backups/cisco/sauvegarde.sh', {
+            ssh.exec('/sharedfolders/cisco/sauvegarde.sh', {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -84,7 +84,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Sauvegarde Switch demandé.");
-            ssh.exec('/sharedfolders/.backups/switch/sauvegarde.sh', {
+            ssh.exec('/sharedfolders/switch/sauvegarde.sh', {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -96,7 +96,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Sauvegarde Vmware demandé.");
-            ssh.exec('/sharedfolders/.backups/esxi/sauvegarde.sh', {
+            ssh.exec('/sharedfolders/esxi/sauvegarde.sh', {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -111,7 +111,7 @@ module.exports = {
       });
         if (data.device == "asterisk") {
             console.log("Restauration Asterisk demandé.");
-            ssh.exec('/sharedfolders/.backups/asterisk/restauration.sh ' + data.date, {
+            ssh.exec('/sharedfolders/asterisk/restauration.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -123,7 +123,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Restauration DHCP demandé.");
-            ssh.exec('/sharedfolders/.backups/dhcp/restauration.sh ' + data.date, {
+            ssh.exec('/sharedfolders/dhcp/restauration.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -136,7 +136,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Restauration DNS demandé.");
-            ssh.exec('/sharedfolders/.backups/dns/restauration.sh ' + data.date, {
+            ssh.exec('/sharedfolders/dns/restauration.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -149,7 +149,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Restauration NAS demandé.");
-            ssh.exec('/sharedfolders/.backups/nas/restauration.sh ' + data.date, {
+            ssh.exec('/sharedfolders/nas/restauration.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -161,7 +161,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Restauration Fortigate demandé.");
-            ssh.exec('/sharedfolders/.backups/fortigate/restauration.sh ' + data.date, {
+            ssh.exec('/sharedfolders/fortigate/restauration.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -173,7 +173,7 @@ module.exports = {
               pass: 'root' //Super la securité
           });
             console.log("Restauration Cisco demandé.");
-            ssh.exec('/sharedfolders/.backups/cisco/restauration.sh ' + data.date, {
+            ssh.exec('/sharedfolders/cisco/restauration.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -188,7 +188,7 @@ module.exports = {
               user: 'root', //Super la securité
               pass: 'root' //Super la securité
           });
-            ssh.exec('/sharedfolders/.backups/asterisk/suppression.sh ' + data.date, {
+            ssh.exec('/sharedfolders/asterisk/suppression.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -199,7 +199,7 @@ module.exports = {
               user: 'root', //Super la securité
               pass: 'root' //Super la securité
           });
-            ssh.exec('/sharedfolders/.backups/dhcp/suppression.sh ' + data.date, {
+            ssh.exec('/sharedfolders/dhcp/suppression.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -210,7 +210,7 @@ module.exports = {
               user: 'root', //Super la securité
               pass: 'root' //Super la securité
           });
-            ssh.exec('/sharedfolders/.backups/dns/suppression.sh ' + data.date, {
+            ssh.exec('/sharedfolders/dns/suppression.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -221,7 +221,7 @@ module.exports = {
               user: 'root', //Super la securité
               pass: 'root' //Super la securité
           });
-            ssh.exec('/sharedfolders/.backups/nas/suppression.sh ' + data.date, {
+            ssh.exec('/sharedfolders/nas/suppression.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -233,7 +233,7 @@ module.exports = {
               user: 'root', //Super la securité
               pass: 'root' //Super la securité
           });
-            ssh.exec('/sharedfolders/.backups/fortigate/suppression.sh ' + data.date, {
+            ssh.exec('/sharedfolders/fortigate/suppression.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
@@ -245,7 +245,7 @@ module.exports = {
               user: 'root', //Super la securité
               pass: 'root' //Super la securité
           });
-            ssh.exec('/sharedfolders/.backups/cisco/suppression.sh ' + data.date, {
+            ssh.exec('/sharedfolders/cisco/suppression.sh ' + data.date, {
                 out: function(stdout) {
                     console.log(stdout);
                 }
